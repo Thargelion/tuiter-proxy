@@ -1,8 +1,6 @@
-name: Laravel
+name: 🧪 Laravel Test
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main", "develop" ]
 

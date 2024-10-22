@@ -33,6 +33,11 @@ jobs:
         with:
           server: ${{ secrets.ftp_host }}
           port: 9021
+          protocol: ftps
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           server-dir: public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
