@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use function App\Http\Controllers\Auth\config;
+use function App\Http\Controllers\Auth\response;
 
 class TuiterApiController
 {
@@ -76,9 +78,27 @@ class TuiterApiController
 
     public function login(Request $request)
     {
-        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
         $res = Http::withHeaders($this->defaultRequestHeaders)->post(
             $this->host . '/v1/login',
+            $request->all()
+        );
+        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
+    }
+
+    public function createUser(Request $request)
+    {
+        $res = Http::withHeaders($this->defaultRequestHeaders)->post(
+            $this->host . '/v1/users',
+            $request->all()
+        );
+        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
+        $res = Http::withHeaders($this->defaultRequestHeaders)->post(
+            $this->host . '/v1/me/profile',
             $request->all()
         );
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
