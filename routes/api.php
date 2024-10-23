@@ -20,6 +20,6 @@ Route::middleware([ApplicationMiddleware::class])->group(function () {
         Route::get('/me/tuits/{tuit_id}', [TuiterApiController::class, 'showTuit'])->name('tuits.show');
         Route::post('/me/tuits', [TuiterApiController::class, 'createTuit'])->name('tuits.create');
         Route::post('/me/tuits/{tuit_id}/likes', [TuiterApiController::class, 'addLike'])->name('tuits.likes.add');
-        Route::delete('/me/tuits/{tuit_id}/likes', [TuiterApiController::class, 'removeLike'])->name('tuits.likes.add');
+        Route::delete('/me/tuits/{tuit_id}/likes', [TuiterApiController::class, 'removeLike'])->name('tuits.likes.delete');
     });
 });

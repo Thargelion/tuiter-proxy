@@ -8,6 +8,7 @@ use App\Services\DefaultUserCrud;
 use App\Services\TokenCrud;
 use App\Services\TokenGenerator;
 use App\Services\UserCrud;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Schema::defaultStringLength(191);
     }
 
     public $singletons = [
