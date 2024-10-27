@@ -14,6 +14,16 @@
         "/api/v1/login": {
             "post": {
                 "operationId": "3d8640b50e530fdcc41074a765e72e15",
+                "parameters": [
+                    {
+                        "name": "Application-Token",
+                        "in": "header",
+                        "description": "Application Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "description": "User Data",
                     "required": true,
@@ -46,6 +56,16 @@
         "/api/v1/users": {
             "post": {
                 "operationId": "a6ac6832cf4cc2364061933b2c6bbf42",
+                "parameters": [
+                    {
+                        "name": "Application-Token",
+                        "in": "header",
+                        "description": "Application Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "description": "User Data",
                     "required": true,
@@ -81,6 +101,24 @@
         "/api/v1/me/feed": {
             "get": {
                 "operationId": "a8cec721ff0fe538c18460ad6673314b",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Application-Token",
+                        "in": "header",
+                        "description": "Application Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Feed"
@@ -91,6 +129,24 @@
         "/api/v1/me/profile": {
             "get": {
                 "operationId": "6bd07d480e0e56a10833c1900e4aa6eb",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Application-Token",
+                        "in": "header",
+                        "description": "Application Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Profile"
@@ -101,6 +157,24 @@
         "/api/v1/me/tuits": {
             "post": {
                 "operationId": "8f44dea4442ff8ed63080a7775cbfce2",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Application-Token",
+                        "in": "header",
+                        "description": "Application Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "description": "Tuit Body",
                     "required": true,
@@ -108,10 +182,7 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "email": {
-                                        "type": "string"
-                                    },
-                                    "password": {
+                                    "message": {
                                         "type": "string"
                                     }
                                 },
@@ -130,6 +201,24 @@
         "/api/v1/me/tuits/{tuit_id}": {
             "get": {
                 "operationId": "00193dee98db54ecae74ea1df5872b0c",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Application-Token",
+                        "in": "header",
+                        "description": "Application Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Mostrar Tuit"
@@ -143,6 +232,24 @@
         "/api/v1/me/tuits/{tuit_id}/likes": {
             "post": {
                 "operationId": "72c5549a4a27029313bf5dcacb330cf1",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Application-Token",
+                        "in": "header",
+                        "description": "Application Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Like Added"
@@ -154,6 +261,24 @@
             },
             "delete": {
                 "operationId": "858aed556fe17be7088cd2f80a9853da",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Application-Token",
+                        "in": "header",
+                        "description": "Application Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Like Removed"

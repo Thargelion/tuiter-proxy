@@ -28,6 +28,7 @@ class TuiterApiController
 
 
     #[OA\Post(path: '/api/v1/login')]
+    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
     #[OA\Response(response: 200, description: 'User Created')]
     #[OA\Response(response: 400, description: 'Bad Request')]
     #[OA\RequestBody(description: 'User Data',
@@ -49,6 +50,7 @@ class TuiterApiController
     }
 
     #[OA\Post(path: '/api/v1/users')]
+    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
     #[OA\Response(response: 200, description: 'User Created')]
     #[OA\Response(response: 400, description: 'Bad Request')]
     #[OA\RequestBody(description: 'User Data',
@@ -71,6 +73,8 @@ class TuiterApiController
     }
 
     #[OA\Get(path: '/api/v1/me/feed')]
+    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
+    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
     #[OA\Response(response: 200, description: 'Feed')]
     public function feed(Request $request)
     {
@@ -83,6 +87,8 @@ class TuiterApiController
     }
 
     #[OA\Get(path: '/api/v1/me/profile')]
+    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
+    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
     #[OA\Response(response: 200, description: 'Profile')]
     public function profile(Request $request)
     {
@@ -104,13 +110,14 @@ class TuiterApiController
     }
 
     #[OA\Post(path: '/api/v1/me/tuits')]
+    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
+    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
     #[OA\Response(response: 200, description: 'Tuit Created')]
     #[OA\RequestBody(description: 'Tuit Body',
         required: true,
         content: [new OA\MediaType(mediaType: 'application/json', schema: new OA\Schema(
             properties: [
-                new OA\Property(property: 'email', type: 'string'),
-                new OA\Property(property: 'password', type: 'string'),
+                new OA\Property(property: 'message', type: 'string'),
             ]
         ))]
     )]
@@ -126,6 +133,8 @@ class TuiterApiController
 
 
     #[OA\Get(path: '/api/v1/me/tuits/{tuit_id}')]
+    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
+    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
     #[OA\Response(response: 200, description: 'Mostrar Tuit')]
     #[OA\Response(response: 401, description: 'Not Allowed')]
     public function showTuit(Request $request)
@@ -141,6 +150,8 @@ class TuiterApiController
     }
 
     #[OA\Post(path: '/api/v1/me/tuits/{tuit_id}/likes')]
+    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
+    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
     #[OA\Response(response: 200, description: 'Like Added')]
     #[OA\Response(response: 401, description: 'Not Allowed')]
     public function addLike(Request $request)
@@ -154,6 +165,8 @@ class TuiterApiController
     }
 
     #[OA\Delete(path: '/api/v1/me/tuits/{tuit_id}/likes')]
+    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
+    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
     #[OA\Response(response: 200, description: 'Like Removed')]
     #[OA\Response(response: 401, description: 'Not Allowed')]
     public function removeLike(Request $request)
