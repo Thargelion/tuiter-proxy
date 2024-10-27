@@ -1,0 +1,168 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "UNLaM Social Proxy",
+        "description": "Proxy for UNLaM Social API",
+        "version": "0.1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/v1/login": {
+            "post": {
+                "operationId": "3d8640b50e530fdcc41074a765e72e15",
+                "requestBody": {
+                    "description": "User Data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/v1/users": {
+            "post": {
+                "operationId": "a6ac6832cf4cc2364061933b2c6bbf42",
+                "requestBody": {
+                    "description": "User Data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/v1/me/feed": {
+            "get": {
+                "operationId": "a8cec721ff0fe538c18460ad6673314b",
+                "responses": {
+                    "200": {
+                        "description": "Feed"
+                    }
+                }
+            }
+        },
+        "/api/v1/me/profile": {
+            "get": {
+                "operationId": "6bd07d480e0e56a10833c1900e4aa6eb",
+                "responses": {
+                    "200": {
+                        "description": "Profile"
+                    }
+                }
+            }
+        },
+        "/api/v1/me/tuits": {
+            "post": {
+                "operationId": "8f44dea4442ff8ed63080a7775cbfce2",
+                "requestBody": {
+                    "description": "Tuit Body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tuit Created"
+                    }
+                }
+            }
+        },
+        "/api/v1/me/tuits/{tuit_id}": {
+            "get": {
+                "operationId": "00193dee98db54ecae74ea1df5872b0c",
+                "responses": {
+                    "200": {
+                        "description": "Mostrar Tuit"
+                    },
+                    "401": {
+                        "description": "Not Allowed"
+                    }
+                }
+            }
+        },
+        "/api/v1/me/tuits/{tuit_id}/likes": {
+            "post": {
+                "operationId": "72c5549a4a27029313bf5dcacb330cf1",
+                "responses": {
+                    "200": {
+                        "description": "Like Added"
+                    },
+                    "401": {
+                        "description": "Not Allowed"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "858aed556fe17be7088cd2f80a9853da",
+                "responses": {
+                    "200": {
+                        "description": "Like Removed"
+                    },
+                    "401": {
+                        "description": "Not Allowed"
+                    }
+                }
+            }
+        }
+    }
+}

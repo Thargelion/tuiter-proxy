@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use OpenApi\Attributes as OA;
+
+define("API_HOST", config('custom.proxy_host'));
+
+#[OA\Info(version: "0.1.0", title: "UNLaM Social Proxy", description: "Proxy for UNLaM Social API")]
+#[OA\Server(url: API_HOST)]
 class TuiterApiController
 {
-    private $defaultResponseHeaders = [
+    private array $defaultResponseHeaders = [
         'Content-Type' => 'application/json',
     ];
 
@@ -20,16 +26,52 @@ class TuiterApiController
         $this->defaultRequestHeaders['Api-Secret'] = config('custom.tuiter_api_key');
     }
 
-    public function createTuit(Request $request)
+
+    #[OA\Post(path: '/api/v1/login')]
+    #[OA\Response(response: 200, description: 'User Created')]
+    #[OA\Response(response: 400, description: 'Bad Request')]
+    #[OA\RequestBody(description: 'User Data',
+        required: true,
+        content: [new OA\MediaType(mediaType: 'application/json', schema: new OA\Schema(
+            properties: [
+                new OA\Property(property: 'email', type: 'string'),
+                new OA\Property(property: 'password', type: 'string'),
+            ]
+        ))]
+    )]
+    public function login(Request $request)
     {
-        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
         $res = Http::withHeaders($this->defaultRequestHeaders)->post(
-            $this->host . '/v1/me/tuits',
+            $this->host . '/v1/login',
             $request->all()
         );
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
     }
 
+    #[OA\Post(path: '/api/v1/users')]
+    #[OA\Response(response: 200, description: 'User Created')]
+    #[OA\Response(response: 400, description: 'Bad Request')]
+    #[OA\RequestBody(description: 'User Data',
+        required: true,
+        content: [new OA\MediaType(mediaType: 'application/json', schema: new OA\Schema(
+            properties: [
+                new OA\Property(property: 'name', type: 'string'),
+                new OA\Property(property: 'email', type: 'string'),
+                new OA\Property(property: 'password', type: 'string'),
+            ]
+        ))]
+    )]
+    public function createUser(Request $request)
+    {
+        $res = Http::withHeaders($this->defaultRequestHeaders)->post(
+            $this->host . '/v1/users',
+            $request->all()
+        );
+        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
+    }
+
+    #[OA\Get(path: '/api/v1/me/feed')]
+    #[OA\Response(response: 200, description: 'Feed')]
     public function feed(Request $request)
     {
         $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
@@ -40,53 +82,13 @@ class TuiterApiController
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
     }
 
-    public function showTuit(Request $request)
+    #[OA\Get(path: '/api/v1/me/profile')]
+    #[OA\Response(response: 200, description: 'Profile')]
+    public function profile(Request $request)
     {
         $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
-        $tuitId = $request->route('tuit_id');
-        $res = Http::withHeaders([
-            'Authorization' => $request->header('Authorization')
-        ])->get(
-            $this->host . '/v1/me/tuits/' . $tuitId
-        );
-        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
-    }
-
-
-    public function addLike(Request $request)
-    {
-        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
-        $tuitId = $request->route('tuit_id');
-        $res = Http::withHeaders($this->defaultRequestHeaders)->post(
-            $this->host . '/v1/me/tuits/' . $tuitId . '/likes'
-        );
-        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
-    }
-
-    public function removeLike(Request $request)
-    {
-        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
-        $tuitId = $request->route('tuit_id');
-        $res = Http::withHeaders($this->defaultRequestHeaders)->delete(
-            $this->host . '/v1/me/tuits/' . $tuitId . '/likes'
-        );
-        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
-    }
-
-    public function login(Request $request)
-    {
-        $res = Http::withHeaders($this->defaultRequestHeaders)->post(
-            $this->host . '/v1/login',
-            $request->all()
-        );
-        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
-    }
-
-    public function createUser(Request $request)
-    {
-        $res = Http::withHeaders($this->defaultRequestHeaders)->post(
-            $this->host . '/v1/users',
-            $request->all()
+        $res = Http::withHeaders($this->defaultRequestHeaders)->get(
+            $this->host . '/v1/me/profile'
         );
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
     }
@@ -101,12 +103,67 @@ class TuiterApiController
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
     }
 
-    public function profile(Request $request)
+    #[OA\Post(path: '/api/v1/me/tuits')]
+    #[OA\Response(response: 200, description: 'Tuit Created')]
+    #[OA\RequestBody(description: 'Tuit Body',
+        required: true,
+        content: [new OA\MediaType(mediaType: 'application/json', schema: new OA\Schema(
+            properties: [
+                new OA\Property(property: 'email', type: 'string'),
+                new OA\Property(property: 'password', type: 'string'),
+            ]
+        ))]
+    )]
+    public function createTuit(Request $request)
     {
         $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
-        $res = Http::withHeaders($this->defaultRequestHeaders)->get(
-            $this->host . '/v1/me/profile'
+        $res = Http::withHeaders($this->defaultRequestHeaders)->post(
+            $this->host . '/v1/me/tuits',
+            $request->all()
         );
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
     }
+
+
+    #[OA\Get(path: '/api/v1/me/tuits/{tuit_id}')]
+    #[OA\Response(response: 200, description: 'Mostrar Tuit')]
+    #[OA\Response(response: 401, description: 'Not Allowed')]
+    public function showTuit(Request $request)
+    {
+        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
+        $tuitId = $request->route('tuit_id');
+        $res = Http::withHeaders([
+            'Authorization' => $request->header('Authorization')
+        ])->get(
+            $this->host . '/v1/me/tuits/' . $tuitId
+        );
+        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
+    }
+
+    #[OA\Post(path: '/api/v1/me/tuits/{tuit_id}/likes')]
+    #[OA\Response(response: 200, description: 'Like Added')]
+    #[OA\Response(response: 401, description: 'Not Allowed')]
+    public function addLike(Request $request)
+    {
+        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
+        $tuitId = $request->route('tuit_id');
+        $res = Http::withHeaders($this->defaultRequestHeaders)->post(
+            $this->host . '/v1/me/tuits/' . $tuitId . '/likes'
+        );
+        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
+    }
+
+    #[OA\Delete(path: '/api/v1/me/tuits/{tuit_id}/likes')]
+    #[OA\Response(response: 200, description: 'Like Removed')]
+    #[OA\Response(response: 401, description: 'Not Allowed')]
+    public function removeLike(Request $request)
+    {
+        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
+        $tuitId = $request->route('tuit_id');
+        $res = Http::withHeaders($this->defaultRequestHeaders)->delete(
+            $this->host . '/v1/me/tuits/' . $tuitId . '/likes'
+        );
+        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
+    }
+
 }
