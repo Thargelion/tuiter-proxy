@@ -99,10 +99,24 @@ class TuiterApiController
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
     }
 
+    #[OA\Put(path: '/api/v1/me/profile')]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\Response(response: 200, description: 'User Created')]
+    #[OA\Response(response: 400, description: 'Bad Request')]
+    #[OA\RequestBody(description: 'User Data',
+        required: true,
+        content: [new OA\MediaType(mediaType: 'application/json', schema: new OA\Schema(
+            properties: [
+                new OA\Property(property: 'name', type: 'string'),
+                new OA\Property(property: 'avatar_url', type: 'string'),
+                new OA\Property(property: 'password', type: 'string'),
+            ]
+        ))]
+    )]
     public function updateProfile(Request $request)
     {
         $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
-        $res = Http::withHeaders($this->defaultRequestHeaders)->post(
+        $res = Http::withHeaders($this->defaultRequestHeaders)->put(
             $this->host . '/v1/me/profile',
             $request->all()
         );

@@ -152,6 +152,49 @@
                         "description": "Profile"
                     }
                 }
+            },
+            "put": {
+                "operationId": "602a69fa8c8c95d2023c47e3683b8944",
+                "parameters": [
+                    {
+                        "name": "Application-Token",
+                        "in": "header",
+                        "description": "Application Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "User Data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "avatar_url": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
             }
         },
         "/api/v1/me/tuits": {
