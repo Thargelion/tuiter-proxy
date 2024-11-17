@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
 use OpenApi\Attributes as OA;
 
 define("API_HOST", config('custom.proxy_host'));
 
-#[OA\Info(version: "0.1.0", title: "UNLaM Social Proxy", description: "Proxy for UNLaM Social API")]
+#[OA\Info(version: "0.1.0", description: "Proxy for UNLaM Social API", title: "UNLaM Social Proxy")]
 #[OA\Server(url: API_HOST)]
 class TuiterApiController
 {
@@ -28,7 +29,7 @@ class TuiterApiController
 
 
     #[OA\Post(path: '/api/v1/login')]
-    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'User Created')]
     #[OA\Response(response: 400, description: 'Bad Request')]
     #[OA\RequestBody(description: 'User Data',
@@ -50,7 +51,7 @@ class TuiterApiController
     }
 
     #[OA\Post(path: '/api/v1/users')]
-    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'User Created')]
     #[OA\Response(response: 400, description: 'Bad Request')]
     #[OA\RequestBody(description: 'User Data',
@@ -73,8 +74,8 @@ class TuiterApiController
     }
 
     #[OA\Get(path: '/api/v1/me/feed')]
-    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
-    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
+    #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Feed')]
     public function feed(Request $request)
     {
@@ -87,8 +88,8 @@ class TuiterApiController
     }
 
     #[OA\Get(path: '/api/v1/me/profile')]
-    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
-    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
+    #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Profile')]
     public function profile(Request $request)
     {
@@ -124,8 +125,8 @@ class TuiterApiController
     }
 
     #[OA\Post(path: '/api/v1/me/tuits')]
-    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
-    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
+    #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Tuit Created')]
     #[OA\RequestBody(description: 'Tuit Body',
         required: true,
@@ -135,7 +136,7 @@ class TuiterApiController
             ]
         ))]
     )]
-    public function createTuit(Request $request)
+    public function createTuit(Request $request): Response
     {
         $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
         $res = Http::withHeaders($this->defaultRequestHeaders)->post(
@@ -147,8 +148,8 @@ class TuiterApiController
 
 
     #[OA\Get(path: '/api/v1/me/tuits/{tuit_id}')]
-    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
-    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
+    #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Mostrar Tuit')]
     #[OA\Response(response: 401, description: 'Not Allowed')]
     public function showTuit(Request $request)
@@ -164,8 +165,8 @@ class TuiterApiController
     }
 
     #[OA\Post(path: '/api/v1/me/tuits/{tuit_id}/likes')]
-    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
-    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
+    #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Like Added')]
     #[OA\Response(response: 401, description: 'Not Allowed')]
     public function addLike(Request $request)
@@ -179,16 +180,31 @@ class TuiterApiController
     }
 
     #[OA\Delete(path: '/api/v1/me/tuits/{tuit_id}/likes')]
-    #[OA\HeaderParameter(in: 'header', description: 'User Token', schema: new OA\Schema(type: 'string'), name: 'Authorization')]
-    #[OA\HeaderParameter(in: 'header', description: 'Application Token', schema: new OA\Schema(type: 'string'), name: 'Application-Token')]
+    #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Like Removed')]
     #[OA\Response(response: 401, description: 'Not Allowed')]
-    public function removeLike(Request $request)
+    public function removeLike(Request $request): Response
     {
         $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
         $tuitId = $request->route('tuit_id');
         $res = Http::withHeaders($this->defaultRequestHeaders)->delete(
             $this->host . '/v1/me/tuits/' . $tuitId . '/likes'
+        );
+        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
+    }
+
+    #[OA\Get(path: '/api/v1/me/tuits/{tuit_id}/replies')]
+    #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\Response(response: 200, description: 'Like Removed')]
+    #[OA\Response(response: 401, description: 'Not Allowed')]
+    public function tuitReplies(Request $request): Response
+    {
+        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
+        $tuitId = $request->route('tuit_id');
+        $res = Http::withHeaders($this->defaultRequestHeaders)->get(
+            $this->host . '/v1/me/feed/' . $tuitId . '/replies'
         );
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
     }

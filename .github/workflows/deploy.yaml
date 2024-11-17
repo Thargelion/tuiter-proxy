@@ -5,12 +5,28 @@ on:
 name: 🚀 Deploy website on Main
 jobs:
   web-deploy:
-    name: 🎉 Deploy
+    name: 🧹 Laravel Optimize & Deploy
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
-
+      - name: 📦 Install Dependencies
+        run: composer install --no-dev --optimize-autoloader
+      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        with:
+          php-version: '8.2'
+      - name: 🧹 Optimize
+        run: php artisan optimize
+      - name: 📦 Cache config
+        run: php artisan config:cache
+      - name: 📦 Cache routes
+        run: php artisan route:cache
+      - name: 📦 Cache views
+        run: php artisan view:cache
+      - name: ▶️ Make script executable
+        run: chmod +x ./lock-and-load.sh
+      - name: ▶️ Run script
+        run: ./lock-and-load.sh
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -25,3 +41,4 @@ jobs:
             **/.git*/**
             **/node_modules/**
             **/vendor/**
+
