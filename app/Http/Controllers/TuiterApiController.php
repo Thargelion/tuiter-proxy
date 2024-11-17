@@ -76,6 +76,8 @@ class TuiterApiController
     #[OA\Get(path: '/api/v1/me/feed')]
     #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\QueryParameter(name: 'page', description: 'Page Number', in: 'query', schema: new OA\Schema(type: 'integer'))]
+    #[OA\QueryParameter(name: 'only_parents', description: 'Get Tuits without replies', in: 'query', schema: new OA\Schema(type: 'boolean'))]
     #[OA\Response(response: 200, description: 'Feed')]
     public function feed(Request $request)
     {
