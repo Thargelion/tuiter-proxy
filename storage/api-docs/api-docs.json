@@ -331,6 +331,79 @@
                     }
                 }
             }
+        },
+        "/api/v1/me/tuits/{tuit_id}/replies": {
+            "get": {
+                "operationId": "02ecf3d0f5d872973d9478691718a4bc",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Application-Token",
+                        "in": "header",
+                        "description": "Application Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Like Removed"
+                    },
+                    "401": {
+                        "description": "Not Allowed"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "780ce3239c54e025a95c6443d35cf646",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Application-Token",
+                        "in": "header",
+                        "description": "Application Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Tuit Body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "message": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tuit Created"
+                    }
+                }
+            }
         }
     }
 }

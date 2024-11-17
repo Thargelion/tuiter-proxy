@@ -209,4 +209,26 @@ class TuiterApiController
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
     }
 
+    #[OA\Post(path: '/api/v1/me/tuits/{tuit_id}/replies')]
+    #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\Response(response: 200, description: 'Tuit Created')]
+    #[OA\RequestBody(description: 'Tuit Body',
+        required: true,
+        content: [new OA\MediaType(mediaType: 'application/json', schema: new OA\Schema(
+            properties: [
+                new OA\Property(property: 'message', type: 'string'),
+            ]
+        ))]
+    )]
+    public function createReply(Request $request): Response
+    {
+        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
+        $res = Http::withHeaders($this->defaultRequestHeaders)->post(
+            $this->host . '/v1/tuits/' . $request->route('tuit_id') . '/replies',
+            $request->all()
+        );
+        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
+    }
+
 }
