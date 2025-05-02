@@ -10,6 +10,10 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
+      - name: 📜 Create .env file
+        run: |
+          touch .env
+          echo "${{secrets.ENV}}" >> .env
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
