@@ -10,18 +10,10 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
-      - name: 📜 Create .env file
-        run: |
-          touch .env
-          echo "${{secrets.ENV_APP}}" > .env
-          echo "${{secrets.ENV_LOG}}" >> .env
-          echo "${{secrets.ENV_DB}}" >> .env
-          echo "${{secrets.ENV_SESSION}}" >> .env
-          echo "${{secrets.ENV_CACHE}}" >> .env
-          echo "${{secrets.ENV_REDIS}}" >> .env
-          echo "${{secrets.ENV_MAIL}}" >> .env
-          echo "${{secrets.ENV_AWS}}" >> .env
-          echo "${{secrets.ENV_HOST}}" >> .env
+      - name: ▶️ Prepare env script
+        run: chmod +x ./envbuilder.sh
+      - name: ▶️ 🔨 Run env loader script
+        run: ./envbuilder.sh
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
