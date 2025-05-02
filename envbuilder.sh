@@ -1,9 +1,11 @@
-echo "${{secrets.ENV_APP}}" > .env
-echo "${{secrets.ENV_LOG}}" >> .env
-echo "${{secrets.ENV_DB}}" >> .env
-echo "${{secrets.ENV_SESSION}}" >> .env
-echo "${{secrets.ENV_CACHE}}" >> .env
-echo "${{secrets.ENV_REDIS}}" >> .env
-echo "${{secrets.ENV_MAIL}}" >> .env
-echo "${{secrets.ENV_AWS}}" >> .env
-echo "${{secrets.ENV_HOST}}" >> .env
+{
+    echo "${ENV_APP}"
+    echo "${ENV_LOG}"
+    echo "${ENV_DB}"
+    echo "${ENV_SESSION}"
+    echo "${ENV_CACHE}"
+    echo "${ENV_REDIS}"
+    echo "${ENV_MAIL}"
+    echo "${ENV_AWS}"
+    echo "${ENV_HOST}"
+} > .env

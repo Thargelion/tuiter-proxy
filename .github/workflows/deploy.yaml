@@ -13,6 +13,16 @@ jobs:
       - name: ▶️ Prepare env script
         run: chmod +x ./envbuilder.sh
       - name: ▶️ 🔨 Run env loader script
+        env:
+          ENV_APP: ${{ secrets.ENV_APP }}
+          ENV_LOG: ${{ secrets.ENV_LOG }}
+          ENV_DB: ${{ secrets.ENV_DB }}
+          ENV_SESSION: ${{ secrets.ENV_SESSION }}
+          ENV_CACHE: ${{ secrets.ENV_CACHE }}
+          ENV_REDIS: ${{ secrets.ENV_REDIS }}
+          ENV_MAIL: ${{ secrets.ENV_MAIL }}
+          ENV_AWS: ${{ secrets.ENV_AWS }}
+          ENV_HOST: ${{ secrets.ENV_HOST }}
         run: ./envbuilder.sh
       - uses: shivammathur/setup-php@v2
         with:
