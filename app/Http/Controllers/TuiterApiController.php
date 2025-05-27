@@ -48,10 +48,8 @@ class TuiterApiController
     )]
     public function login(Request $request)
     {
-        Log::info('Login request', [
-            'request' => $request->all(),
-            'headers' => $request->headers->all(),
-        ]);
+        $body = $request->json()->all();
+        Log::debug('Login request: {req}',['req' => $body]);
         $res = Http::withHeaders($this->defaultRequestHeaders)->post(
             $this->host . '/v1/login',
             $request->all()
