@@ -48,7 +48,7 @@ class TuiterApiController
     )]
     public function login(Request $request)
     {
-        Log::debug('Login request', [
+        Log::info('Login request', [
             'request' => $request->all(),
             'headers' => $request->headers->all(),
         ]);
