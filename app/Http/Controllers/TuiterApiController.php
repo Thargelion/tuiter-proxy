@@ -49,7 +49,7 @@ class TuiterApiController
     public function login(Request $request)
     {
         $body = $request->json()->all();
-        Log::debug('Login request: {req}',['req' => $body]);
+        Log::debug('Login request: {req}', ['req' => $body]);
         $res = Http::withHeaders($this->defaultRequestHeaders)->post(
             $this->host . '/v1/login',
             $request->all()
@@ -165,9 +165,7 @@ class TuiterApiController
     {
         $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
         $tuitId = $request->route('tuit_id');
-        $res = Http::withHeaders([
-            'Authorization' => $request->header('Authorization')
-        ])->get(
+        $res = Http::withHeaders($this->defaultRequestHeaders)->get(
             $this->host . '/v1/me/tuits/' . $tuitId
         );
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
