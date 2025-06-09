@@ -156,10 +156,11 @@ class TuiterApiController
     #[OA\Response(response: 401, description: 'Not Allowed')]
     public function showTuit(Request $request)
     {
-        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
+        $authorizationHeader = $request->header('Authorization');
+        $this->defaultRequestHeaders['Authorization'] = $authorizationHeader;
         $tuitId = $request->route('tuit_id');
         $res = Http::withHeaders([
-            'Authorization' => $request->header('Authorization')
+            'Authorization' => $authorizationHeader
         ])->get(
             $this->host . '/v1/me/tuits/' . $tuitId
         );
