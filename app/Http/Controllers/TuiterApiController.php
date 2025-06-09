@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use OpenApi\Attributes as OA;
 
 define("API_HOST", config('custom.proxy_host'));
@@ -28,6 +30,9 @@ class TuiterApiController
     }
 
 
+    /**
+     * @throws ConnectionException
+     */
     #[OA\Post(path: '/api/v1/login')]
     #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'User Created')]
@@ -43,6 +48,8 @@ class TuiterApiController
     )]
     public function login(Request $request)
     {
+        $body = $request->json()->all();
+        Log::debug('Login request: {req}', ['req' => $body]);
         $res = Http::withHeaders($this->defaultRequestHeaders)->post(
             $this->host . '/v1/login',
             $request->all()
@@ -197,6 +204,9 @@ class TuiterApiController
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
     }
 
+    /**
+     * @throws ConnectionException
+     */
     #[OA\Get(path: '/api/v1/me/tuits/{tuit_id}/replies')]
     #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
@@ -212,6 +222,9 @@ class TuiterApiController
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
     }
 
+    /**
+     * @throws ConnectionException
+     */
     #[OA\Post(path: '/api/v1/me/tuits/{tuit_id}/replies')]
     #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
