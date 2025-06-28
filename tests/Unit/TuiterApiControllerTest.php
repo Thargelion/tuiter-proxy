@@ -149,9 +149,7 @@ class TuiterApiControllerTest extends TestCase
         // When - Execute the controller method
         $response = $this->controller->createUser($request);
 
-        // Then - Log the captured requests for debugging
-        Log::info('Captured HTTP requests in testCreateUser:', $capturedRequests);
-
+        // Then - Verify captured requests through assertions
         // Basic verification
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('Content-Type'));
