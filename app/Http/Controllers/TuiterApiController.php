@@ -11,8 +11,9 @@ use OpenApi\Attributes as OA;
 
 define("API_HOST", config('custom.proxy_host'));
 
-#[OA\Info(version: "0.1.0", description: "Proxy for UNLaM Social API", title: "UNLaM Social Proxy")]
+#[OA\Info(version: "0.2.0", description: "Proxy for UNLaM Social API", title: "UNLaM Social Proxy")]
 #[OA\Server(url: API_HOST)]
+#[OA\Server(url: lele.com)]
 class TuiterApiController
 {
     private array $defaultResponseHeaders = [
