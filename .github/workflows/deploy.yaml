@@ -39,12 +39,12 @@ jobs:
         run: php artisan view:cache
       - name: 📦 Cache configurations
         run: php artisan config:cache
+      - name: 📖Generate documentation
+        run: php artisan l5-swagger:generate
       - name: ▶️ Make script executable
         run: chmod +x ./lock-and-load.sh
       - name: ▶️ Fix cache locations
         run: ./lock-and-load.sh
-      - name: 📖Generate documentation
-        run: php artisan l5-swagger:generate
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
