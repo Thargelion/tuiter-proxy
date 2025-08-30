@@ -3,13 +3,8 @@
     "info": {
         "title": "UNLaM Social Proxy",
         "description": "Proxy for UNLaM Social API",
-        "version": "0.1.0"
+        "version": "0.2.0"
     },
-    "servers": [
-        {
-            "url": "http://localhost:8000"
-        }
-    ],
     "paths": {
         "/api/v1/login": {
             "post": {
