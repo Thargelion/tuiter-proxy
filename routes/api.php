@@ -14,6 +14,7 @@ Route::middleware([ApplicationMiddleware::class])->group(function () {
     Route::prefix('v1')->group(function () {
         Route::post('/login', [TuiterApiController::class, 'login'])->name('me.login');
         Route::post('/users', [TuiterApiController::class, 'createUser'])->name('user.create');
+        Route::get('/users/{user_id}', [TuiterApiController::class, 'showUser'])->name('user.show');
         Route::get('/me/profile', [TuiterApiController::class, 'profile'])->name('me.profile.show');
         Route::put('/me/profile', [TuiterApiController::class, 'updateProfile'])->name('me.profile.update');
         Route::get('/me/feed', [TuiterApiController::class, 'feed'])->name('me.feed');

@@ -80,6 +80,21 @@ class TuiterApiController
         return response($res->body(), $res->status(), $this->defaultResponseHeaders);
     }
 
+    #[OA\Get(path: '/api/v1/users/{user_id}')]
+    #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
+    #[OA\Response(response: 200, description: 'Feed')]
+    public function showUser(Request $request)
+    {
+        $this->defaultRequestHeaders['Authorization'] = $request->header('Authorization');
+        $userId = $request->route('user_id');
+        $res = Http::withHeaders($this->defaultRequestHeaders)->get(
+            $this->host . '/v1/users/' . $userId,
+            $request->query()
+        );
+        return response($res->body(), $res->status(), $this->defaultResponseHeaders);
+    }
+
     #[OA\Get(path: '/api/v1/me/feed')]
     #[OA\HeaderParameter(name: 'Authorization', description: 'User Token', in: 'header', schema: new OA\Schema(type: 'string'))]
     #[OA\HeaderParameter(name: 'Application-Token', description: 'Application Token', in: 'header', schema: new OA\Schema(type: 'string'))]
