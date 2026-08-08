@@ -8,6 +8,13 @@ php artisan serve
 
 ```
 
+  ## PHP / Laravel
+  - When deploying Laravel via GitHub Actions with `config:cache`, paths like `storage_path()` are baked at CI time — if CI and production have different directory structures, the cached config will contain the wrong paths
+  - Always set path-sensitive values (e.g. `LOG_PATH`) as explicit env vars in the production `.env` so they are baked in correctly at cache time
+    - Example: `LOG_PATH=/home/user/yourapp/public_html/storage/logs/laravel.log`
+  - Always ensure `storage/logs` and `bootstrap/cache` directories exist before running artisan commands in CI (add a `mkdir -p` step)
+  - Log file path is configured in `config/logging.php` — use `env('LOG_PATH', storage_path('logs/laravel.log'))` on the `single` and `daily` channels to make it overridable
+
 ## Generate documentation
 
 ```bash
