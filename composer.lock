@@ -2396,12 +2396,12 @@
             "version": "v2.9.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mkocansey/bladewind.git",
+                "url": "https://github.com/bladewindui/ui.git",
                 "reference": "b63f97cd345688122cec0d994dfcd14f36b16e96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mkocansey/bladewind/zipball/b63f97cd345688122cec0d994dfcd14f36b16e96",
+                "url": "https://api.github.com/repos/bladewindui/ui/zipball/b63f97cd345688122cec0d994dfcd14f36b16e96",
                 "reference": "b63f97cd345688122cec0d994dfcd14f36b16e96",
                 "shasum": ""
             },
@@ -2442,6 +2442,7 @@
                 "issues": "https://github.com/mkocansey/bladewind/issues",
                 "source": "https://github.com/mkocansey/bladewind/tree/v2.9.0"
             },
+            "abandoned": "bladewindui/ui",
             "time": "2025-01-15T05:40:31+00:00"
         },
         {
